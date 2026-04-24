@@ -1,8 +1,5 @@
-Here's a clean, professional, and well-structured version of your README.md. It keeps the **exact same content and structure** as your original, but removes all emojis, makes the language more polished and professional, improves formatting for clarity, and ensures it reads like a high-quality open-source project.
 
----
 
-```markdown
 <h1 align="center">Advanced Small Language Model (SLM) from Scratch</h1>
 <h3 align="center">LLaMA/Mistral-Style Architecture with RoPE · RMSNorm · SwiGLU · WandB</h3>
 
@@ -42,18 +39,18 @@ The model demonstrates coherent story generation and provides a complete pre-tra
 
 ## Architecture Comparison
 
-| Component              | GPT-2 Baseline                          | This Project (LLaMA-Style)                          |
-|------------------------|-----------------------------------------|-----------------------------------------------------|
-| Positional Encoding    | Learned absolute positional embeddings  | Rotary Positional Embeddings (RoPE)                 |
-| Normalization          | LayerNorm                               | RMSNorm                                             |
-| MLP Activation         | GELU                                    | SwiGLU                                              |
-| Attention Projection   | Fused QKV                               | Separate Q, K, V projections (no bias)              |
-| Attention Mechanism    | Manual softmax                          | Flash Attention (PyTorch SDPA)                      |
-| Normalization Placement| Post-norm                               | Pre-norm                                            |
-| Decoding Strategies    | Top-k only                              | Top-k + Top-p + Beam Search                         |
-| Metrics                | Train/Val Loss                          | Loss + Perplexity + Gradient Norm                   |
-| Experiment Tracking    | None                                    | Full Weights & Biases dashboard                     |
-| Interpretability       | None                                    | Per-layer attention heatmaps                        |
+| Component                  | GPT-2 Baseline                          | This Project (LLaMA-Style)                          |
+|----------------------------|-----------------------------------------|-----------------------------------------------------|
+| Positional Encoding        | Learned absolute positional embeddings  | Rotary Positional Embeddings (RoPE)                 |
+| Normalization              | LayerNorm                               | RMSNorm                                             |
+| MLP Activation             | GELU                                    | SwiGLU                                              |
+| Attention Projection       | Fused QKV                               | Separate Q, K, V projections (no bias)              |
+| Attention Mechanism        | Manual softmax                          | Flash Attention (PyTorch SDPA)                      |
+| Normalization Placement    | Post-norm                               | Pre-norm                                            |
+| Decoding Strategies        | Top-k only                              | Top-k + Top-p + Beam Search                         |
+| Metrics                    | Train/Val Loss                          | Loss + Perplexity + Gradient Norm                   |
+| Experiment Tracking        | None                                    | Full Weights & Biases dashboard                     |
+| Interpretability           | None                                    | Per-layer attention heatmaps                        |
 
 ---
 
@@ -61,14 +58,14 @@ The model demonstrates coherent story generation and provides a complete pre-tra
 
 ```mermaid
 graph LR
-A[TinyStories Dataset] --> B[tiktoken Tokenizer]
-B --> C[NumPy MemMap Disk Store]
-C --> D[PyTorch DataLoader]
-D --> E[SLM — RoPE + RMSNorm + SwiGLU]
-E --> F[Mixed Precision Training]
-F --> G[WandB Experiment Tracking]
-G --> H[Checkpoint — best_slm_params.pt]
-H --> I[Multi-Strategy Inference + Attention Visualization]
+    A[TinyStories Dataset] --> B[tiktoken Tokenizer]
+    B --> C[NumPy MemMap Disk Store]
+    C --> D[PyTorch DataLoader]
+    D --> E[SLM — RoPE + RMSNorm + SwiGLU]
+    E --> F[Mixed Precision Training]
+    F --> G[WandB Experiment Tracking]
+    G --> H[Checkpoint — best_slm_params.pt]
+    H --> I[Multi-Strategy Inference + Attention Visualization]
 ```
 
 ---
