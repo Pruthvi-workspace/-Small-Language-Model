@@ -72,47 +72,24 @@ graph LR
 
 ## Model Architecture
 
-```
-Input Token IDs
-      │
-      ▼
-┌─────────────────────────┐
-│ Token Embedding (wte)   │   ← No learned positional embedding (RoPE handles position)
-└─────────────────────────┘
-      │
-      ▼
-┌─────────────────────────────────────────┐ ×N layers
-│ Transformer Block                       │
-│                                         │
-│  ┌──────────┐ ┌───────────────────┐    │
-│  │ RMSNorm  │ → │ CausalSelfAttn    │    │
-│  └──────────┘ │ + RoPE on Q,K     │    │
-│                │ + Flash Attention │    │
-│  └───────────────────┘                 │
-│  (residual connection)                  │
-│                                         │
-│  ┌──────────┐ ┌───────────────────┐    │
-│  │ RMSNorm  │ → │ SwiGLU MLP        │    │
-│  └──────────┘ │ SiLU(xW1) ⊙ xW3   │    │
-│  └───────────────────┘                 │
-│  (residual connection)                  │
-└─────────────────────────────────────────┘
-      │
-      ▼
-┌─────────────────────────┐
-│ Final RMSNorm           │
-└─────────────────────────┘
-      │
-      ▼
-┌─────────────────────────┐
-│ LM Head (linear)        │   ← Weight-tied with token embedding
-└─────────────────────────┘
-      │
-      ▼
-   Logits → Cross-Entropy Loss / Token Sampling
-```
+flowchart TD
+    A[Input Token IDs] --> B[Token Embedding (wte)\nNo positional embedding (RoPE used)]
 
----
+    B --> C[Transformer Block × N]
+
+    subgraph TBLOCK[Transformer Block]
+        D1[RMSNorm] --> D2[Causal Self-Attention\n+ RoPE on Q,K\n+ Flash Attention]
+        D2 --> D3[Residual Connection]
+
+        D3 --> D4[RMSNorm]
+        D4 --> D5[SwiGLU MLP\nSiLU(xW1) ⊙ xW3]
+        D5 --> D6[Residual Connection]
+    end
+
+    C --> E[Final RMSNorm]
+    E --> F[LM Head (Linear)\nWeight-tied with embedding]
+    F --> G[Logits]
+    G --> H[Cross-Entropy Loss / Token Sampling]
 
 ## Model Configuration
 
