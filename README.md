@@ -74,23 +74,23 @@ graph LR
 
 ```mermaid
 flowchart TD
-    A[Input Token IDs] --> B[Token Embedding (wte)<br/>No positional embedding (RoPE used)]
+    A[Input Token IDs] --> B[Token Embedding wte - No positional embedding (RoPE used)]
 
-    B --> C[Transformer Block × N]
+    B --> C[Transformer Block x N]
 
     subgraph TBLOCK[Transformer Block]
-        D1[RMSNorm] --> D2[Causal Self-Attention<br/>+ RoPE on Q,K<br/>+ Flash Attention]
+        D1[RMSNorm] --> D2[Causal Self Attention - RoPE on Q,K - Flash Attention]
         D2 --> D3[Residual Connection]
 
         D3 --> D4[RMSNorm]
-        D4 --> D5[SwiGLU MLP<br/>SiLU(xW1) ⊙ xW3]
+        D4 --> D5[SwiGLU MLP - SiLU(xW1) * xW3]
         D5 --> D6[Residual Connection]
     end
 
     C --> E[Final RMSNorm]
-    E --> F[LM Head (Linear)<br/>Weight-tied with embedding]
+    E --> F[LM Head Linear - Weight tied with embedding]
     F --> G[Logits]
-    G --> H[Cross-Entropy Loss / Token Sampling]
+    G --> H[Cross Entropy Loss / Token Sampling]
 
 ## Model Configuration
 
