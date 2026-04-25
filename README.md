@@ -91,6 +91,9 @@ flowchart TD
     E --> F[LM Head Linear]
     F --> G[Logits]
     G --> H[Loss or Sampling]
+```
+
+---
 
 ## Model Configuration
 
